@@ -2,7 +2,7 @@ trigger:
 - none
 
 pool:
-  vmImage: Default
+  name: Default
 
 parameters:
   - name: stages
