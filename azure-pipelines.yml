@@ -1,8 +1,8 @@
 trigger:
-- main
+- none
 
 pool:
-  vmImage: windows-latest
+  vmImage: Default
 
 parameters:
   - name: stages
