@@ -1,0 +1,34 @@
+trigger:
+  - main
+
+pool:
+  vmImage: windows-latest
+
+parameters:
+  - name: stages
+    type: object
+    default:
+      - name : dev
+      - name : tst
+      - name : stg
+      - name : prod
+
+stages:
+  - ${{each stage in parameters.stages}}:
+      - stage: ${{stage.name}}
+        variables:
+          - group: vg-${{stage.name}}
+        jobs:
+          - deployment: ${{stage.name}}_deploy
+            environment: ${{stage.name}}_environment
+            workspace:
+              clean: all
+            strategy:
+              runOnce:
+                deploy:
+                  steps:
+                    - script: |
+                        echo ####################################
+                        echo Current Environment - $(environment)
+                        echo ####################################
+                      displayName: '$(environment) environment'
